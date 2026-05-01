@@ -61,13 +61,13 @@ const BloodStock = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Blood Stock Management</h2>
-        <div className="flex space-x-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Blood Stock Management</h2>
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
           <select
             value={selectedHospital}
             onChange={(e) => setSelectedHospital(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white"
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white w-full sm:w-auto"
           >
             {hospitals.length === 0 && <option value="">No Hospitals Found</option>}
             {hospitals.map(hospital => (
@@ -76,7 +76,7 @@ const BloodStock = () => {
           </select>
           <button
             onClick={() => { setFormData({ hospitalId: selectedHospital, bloodGroup: '', unitsAvailable: '' }); setShowModal(true); }}
-            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors w-full sm:w-auto justify-center"
           >
             Update Stock
           </button>
