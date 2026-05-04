@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 import { Plus, Edit2, Trash2, Search, FileText, Upload, CheckCircle, XCircle } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -171,7 +171,7 @@ const Donors = () => {
                   )}
                   {donor.medicalReport && (
                     <>
-                      <a href={`http://localhost:5001${donor.medicalReport}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-900 mr-4 inline-flex items-center" title="View Medical Report">
+                      <a href={`${BASE_URL}${donor.medicalReport}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-900 mr-4 inline-flex items-center" title="View Medical Report">
                         <FileText className="h-5 w-5" />
                       </a>
                       <button onClick={() => handleStatusChange(donor._id, 'Eligible')} className="text-green-600 hover:text-green-900 mr-3 inline-flex items-center" title="Mark as Eligible">
