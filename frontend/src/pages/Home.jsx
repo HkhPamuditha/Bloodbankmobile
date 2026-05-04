@@ -103,6 +103,9 @@ const Home = () => {
     }
   };
 
+  const todayStr = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0];
+  const maxDateStr = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000 - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0];
+
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-red-100">
       {/* Navigation Bar */}
@@ -357,8 +360,8 @@ const Home = () => {
                   <input
                     required
                     type="date"
-                    min={new Date().toISOString().split('T')[0]}
-                    max={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                    min={todayStr}
+                    max={maxDateStr}
                     value={formData.appointmentDate}
                     onChange={e => setFormData({ ...formData, appointmentDate: e.target.value })}
                     readOnly={!!selectedCamp}

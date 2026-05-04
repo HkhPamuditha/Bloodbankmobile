@@ -20,21 +20,24 @@ const Dashboard = () => {
     donors: 0,
     appointments: 0,
     hospitals: 0,
+    bloodCamps: 0,
   });
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [donorsRes, apptRes, hospRes] = await Promise.all([
+        const [donorsRes, apptRes, hospRes, campsRes] = await Promise.all([
           api.get('/donors'),
           api.get('/appointments'),
           api.get('/hospitals'),
+          api.get('/bloodcamps'),
         ]);
 
         setStats({
           donors: donorsRes.data.length,
           appointments: apptRes.data.filter(apt => apt.status === 'Pending').length,
           hospitals: hospRes.data.length,
+          bloodCamps: campsRes.data.length,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -51,6 +54,7 @@ const Dashboard = () => {
         <DashboardCard title="Total Donors" count={stats.donors} icon={Users} color="bg-blue-500" link="/donors" />
         <DashboardCard title="New Appointments" count={stats.appointments} icon={Calendar} color="bg-purple-500" link="/appointments" />
         <DashboardCard title="Total Hospitals" count={stats.hospitals} icon={Building2} color="bg-green-500" link="/hospitals" />
+        <DashboardCard title="Total Blood Camps" count={stats.bloodCamps} icon={Droplet} color="bg-red-500" link="/bloodcamps" />
       </div>
     </div>
   );
