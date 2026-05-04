@@ -164,7 +164,7 @@ const BloodCamps = () => {
                 </div>
                 <input required type="text" placeholder="Location" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
                 <div className="relative group">
-                  <input required type="date" min={new Date().toISOString().split('T')[0]} value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20 bg-white" />
+                  <input required type="date" min={new Date().toISOString().split('T')[0]} value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 appearance-none [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20 bg-white" />
                   <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-red-500 z-10 pointer-events-none transition-colors" />
                 </div>
                 <div className="flex space-x-2">
@@ -174,7 +174,7 @@ const BloodCamps = () => {
                       type="time" 
                       value={formData.startTime} 
                       onChange={e => setFormData({...formData, startTime: e.target.value})} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 appearance-none bg-white" 
                     />
                   </div>
                   <div className="w-1/2">
@@ -183,7 +183,7 @@ const BloodCamps = () => {
                       type="time" 
                       value={formData.endTime} 
                       onChange={e => setFormData({...formData, endTime: e.target.value})} 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 appearance-none bg-white" 
                     />
                   </div>
                 </div>

@@ -358,6 +358,7 @@ const Home = () => {
                     required
                     type="date"
                     min={new Date().toISOString().split('T')[0]}
+                    max={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
                     value={formData.appointmentDate}
                     onChange={e => setFormData({ ...formData, appointmentDate: e.target.value })}
                     readOnly={!!selectedCamp}
