@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
-import { Plus, Edit2, Trash2, Calendar, X, Clock } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, X, Clock, ChevronDown } from 'lucide-react';
 
 const BloodCamps = () => {
   const [bloodCamps, setBloodCamps] = useState([]);
@@ -153,12 +153,15 @@ const BloodCamps = () => {
               <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">{editId ? 'Edit Blood Camp' : 'Add New Blood Camp'}</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input required type="text" placeholder="Camp Name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
-                <select required value={formData.hospitalId} onChange={e => setFormData({...formData, hospitalId: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white">
-                  <option value="">Select Target Hospital</option>
-                  {hospitals.map(h => (
-                    <option key={h._id} value={h._id}>{h.hospitalName}</option>
-                  ))}
-                </select>
+                <div className="relative group">
+                  <select required value={formData.hospitalId} onChange={e => setFormData({...formData, hospitalId: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white appearance-none cursor-pointer">
+                    <option value="">Select Target Hospital</option>
+                    {hospitals.map(h => (
+                      <option key={h._id} value={h._id}>{h.hospitalName}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none group-hover:text-red-500 transition-colors" />
+                </div>
                 <input required type="text" placeholder="Location" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
                 <input required type="date" min={new Date().toISOString().split('T')[0]} value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
                 <div className="flex space-x-2">

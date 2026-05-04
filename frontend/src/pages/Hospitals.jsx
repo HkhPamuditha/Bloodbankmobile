@@ -111,7 +111,10 @@ const Hospitals = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input required type="text" placeholder="Hospital Name" value={formData.hospitalName} onChange={e => setFormData({...formData, hospitalName: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
                 <input required type="text" placeholder="Location" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
-                <input required type="text" placeholder="Contact Number" value={formData.contactNumber} onChange={e => setFormData({...formData, contactNumber: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
+                <input required type="text" maxLength="10" pattern="\d{10}" title="Contact number must be exactly 10 digits" placeholder="Contact Number" value={formData.contactNumber} onChange={e => {
+                  const val = e.target.value.replace(/\D/g, '');
+                  setFormData({...formData, contactNumber: val});
+                }} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
                 
                 <div className="flex justify-end space-x-3 mt-6">
                   <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">Cancel</button>

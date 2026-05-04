@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { ChevronDown, Plus, Minus } from 'lucide-react';
 
 const BloodStock = () => {
   const [stock, setStock] = useState([]);
@@ -64,16 +65,19 @@ const BloodStock = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Blood Stock Management</h2>
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
-          <select
-            value={selectedHospital}
-            onChange={(e) => setSelectedHospital(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white w-full sm:w-auto"
-          >
-            {hospitals.length === 0 && <option value="">No Hospitals Found</option>}
-            {hospitals.map(hospital => (
-              <option key={hospital._id} value={hospital._id}>{hospital.hospitalName}</option>
-            ))}
-          </select>
+          <div className="relative group w-full sm:w-auto">
+            <select
+              value={selectedHospital}
+              onChange={(e) => setSelectedHospital(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white w-full sm:w-auto appearance-none cursor-pointer pr-10"
+            >
+              {hospitals.length === 0 && <option value="">No Hospitals Found</option>}
+              {hospitals.map(hospital => (
+                <option key={hospital._id} value={hospital._id}>{hospital.hospitalName}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none group-hover:text-red-500 transition-colors" />
+          </div>
           <button
             onClick={() => { setFormData({ hospitalId: selectedHospital, bloodGroup: '', unitsAvailable: '' }); setShowModal(true); }}
             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors w-full sm:w-auto justify-center"
@@ -102,24 +106,53 @@ const BloodStock = () => {
             <div className="mt-3">
               <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">Update Blood Stock</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
-                <select required value={formData.hospitalId} onChange={e => setFormData({ ...formData, hospitalId: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500">
-                  <option value="">Select Hospital</option>
-                  {hospitals.map(hospital => (
-                    <option key={hospital._id} value={hospital._id}>{hospital.hospitalName}</option>
-                  ))}
-                </select>
-                <select required value={formData.bloodGroup} onChange={e => setFormData({ ...formData, bloodGroup: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500">
-                  <option value="">Select Blood Group</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                </select>
-                <input required type="number" placeholder="Units Available" value={formData.unitsAvailable} onChange={e => setFormData({ ...formData, unitsAvailable: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
+                <div className="relative group">
+                  <select required value={formData.hospitalId} onChange={e => setFormData({ ...formData, hospitalId: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 appearance-none bg-white cursor-pointer pr-10">
+                    <option value="">Select Hospital</option>
+                    {hospitals.map(hospital => (
+                      <option key={hospital._id} value={hospital._id}>{hospital.hospitalName}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none group-hover:text-red-500 transition-colors" />
+                </div>
+                <div className="relative group">
+                  <select required value={formData.bloodGroup} onChange={e => setFormData({ ...formData, bloodGroup: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 appearance-none bg-white cursor-pointer pr-10">
+                    <option value="">Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none group-hover:text-red-500 transition-colors" />
+                </div>
+                <div className="flex items-center border border-gray-300 rounded-md focus-within:border-red-500 focus-within:ring-1 focus-within:ring-red-500 overflow-hidden bg-white">
+                  <button 
+                    type="button" 
+                    onClick={() => setFormData({ ...formData, unitsAvailable: Math.max(0, (parseInt(formData.unitsAvailable) || 0) - 1) })}
+                    className="px-4 py-2.5 bg-gray-50 text-gray-600 hover:bg-gray-200 transition-colors border-r border-gray-300 focus:outline-none"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <input 
+                    required 
+                    type="number" 
+                    placeholder="Units Available" 
+                    value={formData.unitsAvailable} 
+                    onChange={e => setFormData({ ...formData, unitsAvailable: e.target.value })} 
+                    className="w-full px-3 py-2 text-center focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none bg-transparent" 
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setFormData({ ...formData, unitsAvailable: (parseInt(formData.unitsAvailable) || 0) + 1 })}
+                    className="px-4 py-2.5 bg-gray-50 text-gray-600 hover:bg-gray-200 transition-colors border-l border-gray-300 focus:outline-none"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
 
                 <div className="flex justify-end space-x-3 mt-6">
                   <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">Cancel</button>

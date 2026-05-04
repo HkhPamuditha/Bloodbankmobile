@@ -3,6 +3,7 @@ const BloodStock = require('../models/BloodStock');
 const Donor = require('../models/Donor');
 const BloodCamp = require('../models/BloodCamp');
 
+//read appointment(fetch)
 exports.getAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find()
@@ -15,6 +16,7 @@ exports.getAppointments = async (req, res) => {
   }
 };
 
+//create appointment
 exports.createAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.create(req.body);
@@ -24,6 +26,7 @@ exports.createAppointment = async (req, res) => {
   }
 };
 
+//update appointment
 exports.updateAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
@@ -75,6 +78,7 @@ exports.updateAppointment = async (req, res) => {
   }
 };
 
+//delete appointment
 exports.deleteAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.findByIdAndDelete(req.params.id);
