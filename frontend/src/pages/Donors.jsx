@@ -209,7 +209,7 @@ const Donors = () => {
               <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">{editId ? 'Edit Donor' : 'Add New Donor'}</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input required type="text" placeholder="Name" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
-                <input required type="text" placeholder="NIC Number" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
+                <input required type="text" placeholder="NIC Number" pattern="^([0-9]{8}[vVxX]|[0-9]{12})$" title="Please enter a valid NIC (e.g., 8 digits followed by 'V' or 12 digits)" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
                 <div className="flex space-x-2">
                   <input type="date" required={!formData.age} value={dob} onChange={handleDobChange} className="w-1/3 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" title="Date of Birth" />
                   <input required type="number" placeholder="Age" value={formData.age} readOnly className="w-1/3 px-3 py-2 border border-gray-300 bg-gray-100 rounded-md focus:outline-none focus:border-red-500 cursor-not-allowed" title="Auto-calculated Age" />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Droplet, Heart, Activity, ShieldCheck, X, Calendar } from 'lucide-react';
+import { Droplet, Heart, Activity, ShieldCheck, X, Calendar, ChevronDown } from 'lucide-react';
 import api from '../services/api';
 
 const Home = () => {
@@ -266,44 +266,60 @@ const Home = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input required type="text" placeholder="Full Name" value={formData.applicantName} onChange={e => setFormData({ ...formData, applicantName: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-              <input required type="text" placeholder="NIC Number" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              <input required type="text" placeholder="NIC Number" pattern="^([0-9]{8}[vVxX]|[0-9]{12})$" title="Please enter a valid NIC (e.g., 8 digits followed by 'V' or 12 digits)" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
 
               <div className="flex space-x-3">
                 <div className="w-1/2">
                   <label className="block text-xs text-gray-500 mb-1">Date of Birth (Must be 18+)</label>
-                  <input
-                    type="date"
-                    required
-                    max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
-                    value={dob}
-                    onChange={handleDobChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                  />
+                  <div className="relative">
+                    <input
+                      type="date"
+                      required
+                      max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+                      value={dob}
+                      onChange={handleDobChange}
+                      onClick={(e) => { if (e.target.showPicker) e.target.showPicker(); }}
+                      className="w-full px-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 appearance-none [&::-webkit-calendar-picker-indicator]:hidden"
+                    />
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <Calendar className="h-5 w-5 text-gray-400" />
+                    </div>
+                  </div>
                 </div>
                 <div className="w-1/2">
                   <label className="block text-xs text-gray-500 mb-1">Age</label>
-                  <input required type="number" placeholder="Age" value={formData.age} readOnly className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-lg text-gray-500 cursor-not-allowed" />
+                  <input required type="number" placeholder="Age" value={formData.age} readOnly className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-lg text-gray-500 cursor-not-allowed [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]" />
                 </div>
               </div>
 
               <div className="flex space-x-3">
-                <select required value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })} className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                <select required value={formData.bloodGroup} onChange={e => setFormData({ ...formData, bloodGroup: e.target.value })} className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
-                  <option value="">Blood Group</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                </select>
+                <div className="relative w-1/2">
+                  <select required value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })} className="appearance-none bg-white w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                    <ChevronDown className="h-5 w-5" />
+                  </div>
+                </div>
+                <div className="relative w-1/2">
+                  <select required value={formData.bloodGroup} onChange={e => setFormData({ ...formData, bloodGroup: e.target.value })} className="appearance-none bg-white w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10">
+                    <option value="">Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                    <ChevronDown className="h-5 w-5" />
+                  </div>
+                </div>
               </div>
 
               <input
@@ -325,23 +341,34 @@ const Home = () => {
                   <input type="text" value={selectedCamp.name + ' (' + selectedCamp.location + ')'} readOnly className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-lg text-gray-600 cursor-not-allowed font-medium" />
                 </div>
               ) : (
-                <select required value={formData.hospitalId} onChange={e => setFormData({ ...formData, hospitalId: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
-                  <option value="">Select Hospital</option>
-                  {hospitals.map(h => <option key={h._id} value={h._id}>{h.hospitalName} ({h.location})</option>)}
-                </select>
+                <div className="relative w-full">
+                  <select required value={formData.hospitalId} onChange={e => setFormData({ ...formData, hospitalId: e.target.value })} className="appearance-none bg-white w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10">
+                    <option value="">Select Hospital</option>
+                    {hospitals.map(h => <option key={h._id} value={h._id}>{h.hospitalName} ({h.location})</option>)}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                    <ChevronDown className="h-5 w-5" />
+                  </div>
+                </div>
               )}
 
               <div className="w-full">
                 <label className="block text-xs text-gray-500 mb-1">Appointment Date</label>
-                <input
-                  required
-                  type="date"
-                  min={new Date().toISOString().split('T')[0]}
-                  value={formData.appointmentDate}
-                  onChange={e => setFormData({ ...formData, appointmentDate: e.target.value })}
-                  readOnly={!!selectedCamp}
-                  className={`w-full px-4 py-2 border border-gray-300 rounded-lg ${selectedCamp ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : 'focus:ring-2 focus:ring-red-500 focus:border-red-500'}`}
-                />
+                <div className="relative">
+                  <input
+                    required
+                    type="date"
+                    min={new Date().toISOString().split('T')[0]}
+                    value={formData.appointmentDate}
+                    onChange={e => setFormData({ ...formData, appointmentDate: e.target.value })}
+                    readOnly={!!selectedCamp}
+                    onClick={(e) => { if (!selectedCamp && e.target.showPicker) e.target.showPicker(); }}
+                    className={`w-full px-4 pr-10 py-2 border border-gray-300 rounded-lg appearance-none [&::-webkit-calendar-picker-indicator]:hidden ${selectedCamp ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : 'focus:ring-2 focus:ring-red-500 focus:border-red-500'}`}
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <Calendar className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
               </div>
 
               <div className="pt-4">
