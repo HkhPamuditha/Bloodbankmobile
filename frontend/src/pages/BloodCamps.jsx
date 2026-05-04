@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
-import { Plus, Edit2, Trash2, Calendar, X, Clock, ChevronDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, X, ChevronDown } from 'lucide-react';
 
 const BloodCamps = () => {
   const [bloodCamps, setBloodCamps] = useState([]);
@@ -163,31 +163,28 @@ const BloodCamps = () => {
                   <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none group-hover:text-red-500 transition-colors" />
                 </div>
                 <input required type="text" placeholder="Location" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
-                <input required type="date" min={new Date().toISOString().split('T')[0]} value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
+                <div className="relative group">
+                  <input required type="date" min={new Date().toISOString().split('T')[0]} value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20 bg-white" />
+                  <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-red-500 z-10 pointer-events-none transition-colors" />
+                </div>
                 <div className="flex space-x-2">
                   <div className="w-1/2">
                     <label className="block text-xs text-gray-500 mb-1">Start Time</label>
-                    <div className="relative group">
-                      <input 
-                        type="time" 
-                        value={formData.startTime} 
-                        onChange={e => setFormData({...formData, startTime: e.target.value})} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20" 
-                      />
-                      <Clock className="absolute right-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-red-500 z-10 pointer-events-none" />
-                    </div>
+                    <input 
+                      type="time" 
+                      value={formData.startTime} 
+                      onChange={e => setFormData({...formData, startTime: e.target.value})} 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" 
+                    />
                   </div>
                   <div className="w-1/2">
                     <label className="block text-xs text-gray-500 mb-1">End Time</label>
-                    <div className="relative group">
-                      <input 
-                        type="time" 
-                        value={formData.endTime} 
-                        onChange={e => setFormData({...formData, endTime: e.target.value})} 
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20" 
-                      />
-                      <Clock className="absolute right-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-red-500 z-10 pointer-events-none" />
-                    </div>
+                    <input 
+                      type="time" 
+                      value={formData.endTime} 
+                      onChange={e => setFormData({...formData, endTime: e.target.value})} 
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" 
+                    />
                   </div>
                 </div>
                 <div className="flex justify-end space-x-3 mt-6">
