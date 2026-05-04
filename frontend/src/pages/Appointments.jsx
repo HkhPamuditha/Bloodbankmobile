@@ -112,9 +112,6 @@ const Appointments = () => {
                       </button>
                     </>
                   )}
-                  <button onClick={() => handleDelete(apt._id)} className="text-red-600 hover:text-red-900" title="Delete">
-                    <Trash2 className="h-5 w-5" />
-                  </button>
                 </td>
               </tr>
             ))}
