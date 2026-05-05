@@ -26,21 +26,31 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [donorsRes, apptRes, hospRes, campsRes] = await Promise.all([
+        const results = await Promise.allSettled([
           api.get('/donors'),
           api.get('/appointments'),
           api.get('/hospitals'),
           api.get('/bloodcamps'),
         ]);
 
-        setStats({
-          donors: donorsRes.data.length,
-          appointments: apptRes.data.filter(apt => apt.status === 'Pending').length,
-          hospitals: hospRes.data.length,
-          bloodCamps: campsRes.data.length,
+        const newStats = {
+          donors: results[0].status === 'fulfilled' ? results[0].value.data.length : 0,
+          appointments: results[1].status === 'fulfilled' ? results[1].value.data.filter(apt => apt.status === 'Pending').length : 0,
+          hospitals: results[2].status === 'fulfilled' ? results[2].value.data.length : 0,
+          bloodCamps: results[3].status === 'fulfilled' ? results[3].value.data.length : 0,
+        };
+
+        setStats(newStats);
+        
+        // Log errors if any
+        results.forEach((res, index) => {
+          if (res.status === 'rejected') {
+            const endpoints = ['/donors', '/appointments', '/hospitals', '/bloodcamps'];
+            console.error(`Error fetching ${endpoints[index]}:`, res.reason);
+          }
         });
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        console.error('Error in fetchStats:', error);
       }
     };
 

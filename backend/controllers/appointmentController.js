@@ -6,6 +6,15 @@ const BloodCamp = require('../models/BloodCamp');
 //read appointment(fetch)
 exports.getAppointments = async (req, res) => {
   try {
+    // Automatically delete pending appointments that have passed (expired)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Start of today
+
+    await Appointment.deleteMany({
+      appointmentDate: { $lt: today },
+      status: 'Pending'
+    });
+
     const appointments = await Appointment.find()
       .populate('donorId', 'name bloodGroup nic')
       .populate('hospitalId', 'hospitalName location')
@@ -43,8 +52,15 @@ exports.updateAppointment = async (req, res) => {
           bloodGroup: appointment.bloodGroup,
           contactNumber: appointment.contactNumber,
           address: appointment.address,
+          lastDonationDate: appointment.appointmentDate,
+          donationCount: 1,
         });
         appointment.donorId = newDonor._id;
+      } else {
+        await Donor.findByIdAndUpdate(appointment.donorId, {
+          lastDonationDate: appointment.appointmentDate,
+          $inc: { donationCount: 1 }
+        });
       }
 
       // Automatically update blood stock upon approval

@@ -8,8 +8,10 @@ const donorSchema = new mongoose.Schema({
   bloodGroup: { type: String, required: true },
   contactNumber: { type: String, required: true },
   address: { type: String, required: true },
+  donationCount: { type: Number, default: 0 },
   medicalReport: { type: String }, // Path or URL to the uploaded medical report
   status: { type: String, enum: ['Pending', 'Eligible', 'Not Eligible'], default: 'Pending' },
+  lastDonationDate: { type: Date },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Donor', donorSchema);

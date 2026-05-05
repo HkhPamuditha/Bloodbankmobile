@@ -259,8 +259,14 @@ const Home = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input required type="text" placeholder="Full Name" value={formData.applicantName} onChange={e => setFormData({ ...formData, applicantName: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-              <input required type="text" placeholder="NIC Number" pattern="^([0-9]{8}[vVxX]|[0-9]{12})$" title="Please enter a valid NIC (e.g., 8 digits followed by 'V' or 12 digits)" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Full Name</label>
+                <input required type="text" placeholder="Full Name" value={formData.applicantName} onChange={e => setFormData({ ...formData, applicantName: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">NIC Number</label>
+                <input required type="text" placeholder="NIC Number" pattern="^([0-9]{8}[vVxX]|[0-9]{12})$" title="Please enter a valid NIC (e.g., 8 digits followed by 'V' or 12 digits)" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              </div>
 
               <div className="flex space-x-3">
                 <div className="w-1/2">
@@ -315,18 +321,24 @@ const Home = () => {
                 </div>
               </div>
 
-              <input
-                required
-                type="tel"
-                pattern="[0-9]{10}"
-                maxLength="10"
-                title="Please enter exactly 10 digits"
-                placeholder="Contact Number"
-                value={formData.contactNumber}
-                onChange={e => setFormData({ ...formData, contactNumber: e.target.value.replace(/\D/g, '') })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
-              />
-              <input required type="text" placeholder="Address" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Contact Number</label>
+                <input
+                  required
+                  type="tel"
+                  pattern="[0-9]{10}"
+                  maxLength="10"
+                  title="Please enter exactly 10 digits"
+                  placeholder="Contact Number"
+                  value={formData.contactNumber}
+                  onChange={e => setFormData({ ...formData, contactNumber: e.target.value.replace(/\D/g, '') })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Address</label>
+                <input required type="text" placeholder="Address" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              </div>
 
               {selectedCamp ? (
                 <div className="w-full">
